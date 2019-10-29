@@ -68,31 +68,35 @@ time_series_generating<-function(Asset1,Asset2,StartDate,EndDate,WindowLength,La
   if (as.Date(StartDate, origin = "1970-01-01")+Lagg<as.Date(AbsStart, origin = "1970-01-01")){ return("The starting date and the lagg gets out of our dataset!")}
   if (as.Date(EndDate, origin = "1970-01-01")+Lagg>as.Date(AbsEnd, origin = "1970-01-01")) {return("The ending date and the lagg gets out of the dataset!")}
   
-  for (i in 1:length(Asset1)){# D·vid kÛdja kevesebb futtat·st igÈnyel,de a form·tumban nem vagyok biztos ezÈrt most ezt hagyom
-    if (as.Date(ret_WTI_fut[[i,1]], )-as.Date(StartDate, origin = "1970-01-01")==0){
+  for (i in 1:length(Asset1)){# D√°vid k√≥dja kevesebb futtat√°st ig√©nyel,de a form√°tumban nem vagyok biztos ez√©rt most ezt hagyom
+    if (as.Date(ret_WTI_fut[[i,1]])-as.Date(StartDate, origin = "1970-01-01")==0){
       StartDateIndex=i 
     }
   }
   
   
   #first row if return matrix is NA for each item!
-  n <- (as.numeric(as.Date(EndDate), origin = "1970-01-01"))-(as.numeric(as.Date(StartDate), origin = "1970-01-01"))-WindowLength #n is the length of the time series ITT BESZARIK MERT NEM J” A D¡TUM, RAKJ BELE as.Date()
-  TimeSeries <- vector(length = n)
+  n <- (as.numeric(as.Date(EndDate), origin = "1970-01-01"))-(as.numeric(as.Date(StartDate), origin = "1970-01-01"))-WindowLength #n is the length of the time series ITT BESZARIK MERT NEM J√ì A D√ÅTUM, RAKJ BELE as.Date()
+  Correlations <- vector(length = n)
+  TimeVector <-vector(length=n)
   for (i in 1:n){ # calculate the values of the vector for each item
-    TimeSeries[i]=cor(Asset1[(StartDateIndex+i-1):(StartDateIndex+i+WindowLength-1)],
+    Correlations[i]=cor(Asset1[(StartDateIndex+i-1):(StartDateIndex+i+WindowLength-1)],
                       Asset2[(StartDateIndex-1+i+Lagg):(StartDateIndex-1+i+Lagg+WindowLength)])
+    TimeVector[i]=as.Date(as.numeric(as.Date(StartDate), origin="1970-01-01")+i-1, origin="1970-01-01")
   }
+  class(TimeVector)<-"Date"
   #please type the dates in this format : "yyyy-mm-dd"
   #Lagg can be negative or positive, depends on the direction you want. ex. -5 lagg means that the other vector will be lagged back in time
   #Asset1 and Asset2 are integers
+  TimeSeries <- data.frame(TimeVector,Correlations)
   return(TimeSeries)
 }
  #this function generates the correlation-timeseries table
  #first you have to run parameter_lists function to get the parameters (as it was asked in the e-mail)
  #the column name's first part shows the unlagged vector,the second part shoes the lagged one
 
-plot_timeseries<-function(){
-  ts_1 <- time_series_generating()
+plot_timeseries<-function(TimeSeries){
+  plot(TimeSeries[,1],TimeSeries[,2],"l")
 }
 
 
