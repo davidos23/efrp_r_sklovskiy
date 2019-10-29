@@ -97,21 +97,21 @@ time_series_generating<-function(Asset1,Asset2,StartDate,EndDate,WindowLength,La
 
 plot_timeseries<-function(){
   
-  ts1<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`3`, "2011-05-06", "2014-09-12", 20, 5)
-  ts2<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`6`, "2011-05-06", "2014-09-12", 20, 5)
-  ts3<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`9`, "2011-05-06", "2014-09-12", 20, 5)
-  ts4<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`12`, "2011-05-06", "2014-09-12", 20, 5)
-  ts5<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`15`, "2011-05-06", "2014-09-12", 20, 5)
+  ts1<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`3`, "2011-05-06", "2014-09-12", 20, 150)
+  ts2<-time_series_generating(ret_WTI_fut$`4`, ret_WTI_fut$`16`, "2011-05-06", "2014-09-12", 20, 50)
+  ts3<-time_series_generating(ret_WTI_fut$`5`, ret_WTI_fut$`9`, "2011-05-06", "2014-09-12", 20, 100)
+  ts4<-time_series_generating(ret_WTI_fut$`7`, ret_WTI_fut$`19`, "2011-05-06", "2014-09-12", 20, 200)
+  ts5<-time_series_generating(ret_WTI_fut$`22`, ret_WTI_fut$`24`, "2011-05-06", "2014-09-12", 20, 10)
   
   plot(ts1[,1],ts1[,2],"l",col="red", xlab="Time", ylab="Cross-Correlation")
   par(new=TRUE)
-  plot(ts1[,1],ts2[,2],"l",col="blue", xlab="Time", ylab="Cross-Correlation")
+  plot(ts1[,1],ts2[,2],"l",col="blue", axes=FALSE, xlab="",ylab="")
   par(new=TRUE)
-  plot(ts1[,1],ts3[,2],"l",col="green", xlab="Time", ylab="Cross-Correlation")
+  plot(ts1[,1],ts3[,2],"l",col="green", axes=FALSE, xlab="",ylab="")
   par(new=TRUE)
-  plot(ts1[,1],ts4[,2],"l",col="darkgoldenrod1", xlab="Time", ylab="Cross-Correlation")
+  plot(ts1[,1],ts4[,2],"l",col="darkgoldenrod1", axes=FALSE, xlab="",ylab="")
   par(new=TRUE)
-  plot(ts1[,1],ts5[,2],"l",col="darkorchid1", xlab="Time", ylab="Cross-Correlation")
+  plot(ts1[,1],ts5[,2],"l",col="darkorchid1", axes=FALSE, xlab="",ylab="")
 }
 
 
