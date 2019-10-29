@@ -95,8 +95,23 @@ time_series_generating<-function(Asset1,Asset2,StartDate,EndDate,WindowLength,La
  #first you have to run parameter_lists function to get the parameters (as it was asked in the e-mail)
  #the column name's first part shows the unlagged vector,the second part shoes the lagged one
 
-plot_timeseries<-function(TimeSeries){
-  plot(TimeSeries[,1],TimeSeries[,2],"l")
+plot_timeseries<-function(){
+  
+  ts1<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`3`, "2011-05-06", "2014-09-12", 20, 5)
+  ts2<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`6`, "2011-05-06", "2014-09-12", 20, 5)
+  ts3<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`9`, "2011-05-06", "2014-09-12", 20, 5)
+  ts4<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`12`, "2011-05-06", "2014-09-12", 20, 5)
+  ts5<-time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`15`, "2011-05-06", "2014-09-12", 20, 5)
+  
+  plot(ts1[,1],ts1[,2],"l",col="red", xlab="Time", ylab="Cross-Correlation")
+  par(new=TRUE)
+  plot(ts1[,1],ts2[,2],"l",col="blue", xlab="Time", ylab="Cross-Correlation")
+  par(new=TRUE)
+  plot(ts1[,1],ts3[,2],"l",col="green", xlab="Time", ylab="Cross-Correlation")
+  par(new=TRUE)
+  plot(ts1[,1],ts4[,2],"l",col="darkgoldenrod1", xlab="Time", ylab="Cross-Correlation")
+  par(new=TRUE)
+  plot(ts1[,1],ts5[,2],"l",col="darkorchid1", xlab="Time", ylab="Cross-Correlation")
 }
 
 
@@ -110,3 +125,5 @@ import_dataset_WTI()
 return_maker(WTI_fut)
 
 TimeSeries <- time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`3`, "2011-05-06", "2014-09-12", 20, 5)
+
+plot_timeseries()
