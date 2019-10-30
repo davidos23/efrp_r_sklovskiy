@@ -68,13 +68,11 @@ return_maker <- function(WTI_fut)
 #this function's inputs will be saved for other functions's parameters
 #please give the dates in this format : "yyyy-mm-dd"
 
-parameter_lists <- function(assetList, startDate, endDate, windowLength, lag)
+parameter_lists <- function(asset1, asset2, startDate, endDate, windowLength, lag)
 {
-  assetList <<- assetList
-  startDate <<- as.Date.character(startDate)
-  endDate <<- as.Date.character(endDate)
-  windowLength <<- windowLength
-  lag <<- lag
+  parameters<-list(asset1,asset2,startDate,endDate,windowLength,lag)
+  return(parameters)
+  
 }
 
 
@@ -85,8 +83,16 @@ parameter_lists <- function(assetList, startDate, endDate, windowLength, lag)
 #lag can be negative or positive, depends on the direction you want. e.g. -5 lagg means that the other vector will be lagged back in time
 #asset1 and asset2 are integers
 
-time_series_generating <- function(asset1, asset2, startDate, endDate, windowLength, lag)
+time_series_generating <- function(parameters)
 {
+  asset1<-parameters[[1]]
+  asset2<-parameters[[2]]
+  startDate<-parameters[[3]]
+  endDate<-parameters[[4]]
+  windowLength<-parameters[[5]]
+  lag<-parameters[[6]]
+  
+  
   absStart <- min(ret_WTI_fut[,1]) #first date in the vector
   absEnd <- max(ret_WTI_fut[,1]) #largest date in the vector
   
@@ -136,11 +142,11 @@ time_series_generating <- function(asset1, asset2, startDate, endDate, windowLen
 plot_timeseries <- function()
 {
   
-  ts1 <- time_series_generating(ret_WTI_fut$`2`, ret_WTI_fut$`3`, "2011-05-06", "2014-09-12", 20, 150)
-  ts2 <- time_series_generating(ret_WTI_fut$`4`, ret_WTI_fut$`16`, "2011-05-06", "2014-09-12", 20, 50)
-  ts3 <- time_series_generating(ret_WTI_fut$`5`, ret_WTI_fut$`9`, "2011-05-06", "2014-09-12", 20, 100)
-  ts4 <- time_series_generating(ret_WTI_fut$`7`, ret_WTI_fut$`19`, "2011-05-06", "2014-09-12", 20, 200)
-  ts5 <- time_series_generating(ret_WTI_fut$`22`, ret_WTI_fut$`24`, "2011-05-06", "2014-09-12", 20, 10)
+  ts1 <- time_series_generating(parameter_lists(ret_WTI_fut$`2`, ret_WTI_fut$`3`, "2011-05-06", "2014-09-12", 20, 150))
+  ts2 <- time_series_generating(parameter_lists(ret_WTI_fut$`4`, ret_WTI_fut$`16`, "2011-05-06", "2014-09-12", 20, 50))
+  ts3 <- time_series_generating(parameter_lists(ret_WTI_fut$`5`, ret_WTI_fut$`9`, "2011-05-06", "2014-09-12", 20, 100))
+  ts4 <- time_series_generating(parameter_lists(ret_WTI_fut$`7`, ret_WTI_fut$`19`, "2011-05-06", "2014-09-12", 20, 200))
+  ts5 <- time_series_generating(parameter_lists(ret_WTI_fut$`22`, ret_WTI_fut$`24`, "2011-05-06", "2014-09-12", 20, 10))
   
   
   plot(ts1[,1], ts1[,2], "l", col = "red", xlab = "Time", ylab = "Correlation", main = "Dynamic cross-correlations")
