@@ -103,15 +103,20 @@ plot_timeseries<-function(){
   ts4<-time_series_generating(ret_WTI_fut$`7`, ret_WTI_fut$`19`, "2011-05-06", "2014-09-12", 20, 200)
   ts5<-time_series_generating(ret_WTI_fut$`22`, ret_WTI_fut$`24`, "2011-05-06", "2014-09-12", 20, 10)
   
-  plot(ts1[,1],ts1[,2],"l",col="red", xlab="Time", ylab="Cross-Correlation")
-  par(new=TRUE)
-  plot(ts1[,1],ts2[,2],"l",col="blue", axes=FALSE, xlab="",ylab="")
-  par(new=TRUE)
-  plot(ts1[,1],ts3[,2],"l",col="green", axes=FALSE, xlab="",ylab="")
-  par(new=TRUE)
-  plot(ts1[,1],ts4[,2],"l",col="darkgoldenrod1", axes=FALSE, xlab="",ylab="")
-  par(new=TRUE)
-  plot(ts1[,1],ts5[,2],"l",col="darkorchid1", axes=FALSE, xlab="",ylab="")
+  
+  plot(ts1[,1],ts1[,2],"l",col="red", xlab="Time", ylab="Correlation", main="Dynamic cross-correlations")
+
+  lines(ts1[,1],ts2[,2],"l",col="blue")
+
+  lines(ts1[,1],ts3[,2],"l",col="green")
+
+  lines(ts1[,1],ts4[,2],"l",col="darkgoldenrod1")
+
+  lines(ts1[,1],ts5[,2],"l",col="darkorchid1")
+  
+  legend("bottomleft", legend=c("ts1","ts2","ts3","ts4","ts5"), fill=c("red","blue","green","darkgoldenrod1","darkorchid1"), cex=0.6)
+  
+
 }
 
 
